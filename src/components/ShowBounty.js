@@ -1,10 +1,7 @@
-import React, { useState } from 'react'
+import React from 'react'
 import NewBountyForm from "./NewBountyForm";
 
 const ShowBounty = (props) => {
-    //State Declarations
-    const [showForm, setShowForm] = useState(false)
-
     let display = <h3>Crime is on the rise</h3>
     let form = ''
 
@@ -13,13 +10,13 @@ const ShowBounty = (props) => {
         let hunters = props.current.hunters.map(hunter => <li key={hunter._id}>{hunter.name}</li>)
         let hunterRender = props.current.hunters[0] ? <ul>{hunters}</ul> : "No Assigned Hunters"
         // Create both buttons for edit form
-        let edit = <button onClick={() => {setShowForm(true)}}>Edit</button>
-        let cancel = <button onClick={() => {setShowForm(false)}}>Cancel</button>
+        let edit = <button onClick={() => {props.toggleForm()}}>Edit</button>
+        let cancel = <button onClick={() => {props.toggleForm()}}>Cancel</button>
         // Edit button logical
-        let button = !showForm ? edit : cancel
+        let button = !props.showForm ? edit : cancel
 
         // If showing edit form render NewBountyForm
-        if (showForm) {
+        if (props.showForm) {
             form = <NewBountyForm current={props.current} refreshBounties={props.refreshBounties} />
         }
 

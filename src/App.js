@@ -8,6 +8,7 @@ const App = () => {
   // State Declarations
   const [current, setCurrent] = useState({})
   const [bounties, setBounties] = useState([])
+  const [showForm, setShowForm] = useState(false)
 
   // Same as calling DidComponentMount
   useEffect(() => {
@@ -35,6 +36,7 @@ const App = () => {
   const changeCurrent = (bounty) => {
       console.log("Bounty:", bounty)
       setCurrent(bounty)
+      setShowForm(false)
   }
 
   // Delete selected bounty from database using DELETE method in API
@@ -51,6 +53,11 @@ const App = () => {
           })
   }
 
+  const toggleForm = () => {
+      let formState = !showForm
+      setShowForm(formState)
+  }
+
   // Map bounties and convert to an array of Poster componenets
   let posters = bounties.map(bounty => <Poster key={bounty.name} bounty={bounty} currentId={current._id} onClick={changeCurrent} handleDelete={deleteBounty}/>)
 
@@ -64,7 +71,7 @@ const App = () => {
         </header>
         <main>
             {posters}
-            <ShowBounty current={current} refreshBounties={getBounties}/>
+            <ShowBounty showForm={showForm} toggleForm={toggleForm} current={current} refreshBounties={getBounties}/>
             <NewBountyForm current={{}} refreshBounties={getBounties}/>
         </main>
       </>
