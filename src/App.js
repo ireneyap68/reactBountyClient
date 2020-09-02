@@ -5,13 +5,17 @@ import ShowBounty from "./components/ShowBounty";
 import NewBountyForm from "./components/NewBountyForm";
 
 const App = () => {
+  // State Declarations
   const [current, setCurrent] = useState({})
   const [bounties, setBounties] = useState([])
 
+  // Same as calling DidComponentMount
   useEffect(() => {
     getBounties()
   }, [])
 
+  // Query our api for all bounties and pass to our state
+  // On refreshBounties if we have a current bounty state set, clear it
   const getBounties = () => {
     fetch('http://localhost:8000/bounties')
         .then(res => res.json())
@@ -27,11 +31,13 @@ const App = () => {
         })
   }
 
+  // Change current bounty when we click on a different bounty
   const changeCurrent = (bounty) => {
       console.log("Bounty:", bounty)
       setCurrent(bounty)
   }
 
+  // Delete selected bounty from database using DELETE method in API
   const deleteBounty = (bountyId) => {
       fetch('http://localhost:8000/bounties/' + bountyId, {
           method: 'delete'
@@ -45,6 +51,7 @@ const App = () => {
           })
   }
 
+  // Map bounties and convert to an array of Poster componenets
   let posters = bounties.map(bounty => <Poster key={bounty.name} bounty={bounty} currentId={current._id} onClick={changeCurrent} handleDelete={deleteBounty}/>)
 
   return (

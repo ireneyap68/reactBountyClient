@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 const NewBountyForm = (props) => {
+    //State Declarations
     const [id, setId] = useState(props.current._id || "")
     const [name, setName] = useState(props.current.name || "")
     const [client, setClient] = useState(props.current.client || "")
@@ -12,6 +13,7 @@ const NewBountyForm = (props) => {
     const submitForm = (e) => {
         e.preventDefault()
         let whichMethod = id ? "PUT" : "POST"
+        // Passing just state variables works for as both your key and value pairs
         fetch('http://localhost:8000/bounties/'+id, {
             method: whichMethod,
             body: JSON.stringify({
@@ -27,7 +29,7 @@ const NewBountyForm = (props) => {
             }
         })
             .then(response => response.json())
-            .then((result) => {
+            .then(() => {
                 setName('')
                 setClient('')
                 setWantedFor('')
@@ -36,7 +38,7 @@ const NewBountyForm = (props) => {
                 setCaptured(false)
             })
             .then(() => {
-                console.log("WOW")
+                // This .then does not return until ALL states are set
                 props.refreshBounties()
             })
             .catch(err => {
@@ -50,6 +52,7 @@ const NewBountyForm = (props) => {
             <form onSubmit={submitForm}>
                 <div>
                     <label htmlFor="name">Name:</label>
+                    {/** Instead of using a setValue variable we can just use our setState variables from each state declaration directly in onChange and just pass the e event **/}
                     <input name="name" type="text" value={name} onChange={(e) => {setName(e.target.value)}}/>
                 </div>
                 <div>
