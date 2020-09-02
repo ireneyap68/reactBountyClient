@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 const Poster = (props) => {
     let more = <button onClick={() => {props.onClick(props.bounty)}}>More</button>
     let less = <button onClick={() => {props.onClick({})}}>Less</button>
-
     let button = props.bounty._id === props.currentId ? less : more
 
     return(

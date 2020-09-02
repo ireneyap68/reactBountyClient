@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 
 const NewBountyForm = (props) => {
     const [id, setId] = useState(props.current._id || "")
@@ -43,9 +43,6 @@ const NewBountyForm = (props) => {
                 console.log(`Failed to ${whichMethod} the bounty:\n ${err}`)
             })
     }
-
-    useEffect(() => {
-    })
 
     return(
         <div className="bounty-form">
