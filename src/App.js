@@ -1,3 +1,4 @@
+require('dotenv').config()
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import Poster from "./components/Poster";
@@ -10,6 +11,8 @@ const App = () => {
   const [bounties, setBounties] = useState([])
   const [showForm, setShowForm] = useState(false)
 
+  const REACT_APP_SERVER_URL = process.env.REACT_APP_SERVER_URL
+
   // Same as calling DidComponentMount
   useEffect(() => {
     getBounties()
@@ -18,7 +21,7 @@ const App = () => {
   // Query our api for all bounties and pass to our state
   // On refreshBounties if we have a current bounty state set, clear it
   const getBounties = () => {
-    fetch('http://localhost:8000/bounties')
+    fetch('process.env.REACT_APP_SERVER_URL')
         .then(res => res.json())
         .then(bounties => {
           console.log(bounties)
